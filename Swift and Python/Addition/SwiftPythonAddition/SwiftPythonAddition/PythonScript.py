@@ -2,8 +2,8 @@ import random
 
 
 def generate_question():
-    value_one = random.randint(10, 20)
-    value_two = random.randint(10, 20)
+    value_one = random.randint(10, 99)
+    value_two = random.randint(10, 99)
     return value_one, value_two
 
 def check_answer(value_one, value_two, user_input):

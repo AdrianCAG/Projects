@@ -67,6 +67,7 @@ struct ContentView: View {
         
             Button(action: {
                 isSubmited = true
+                userInput = ""
                 nextQuestion()
             }) {
                 Label("New Question", systemImage: "rectangle.portrait.and.arrow.forward.fill")
@@ -122,6 +123,7 @@ struct ContentView: View {
     private func resetGame() {
         correctCount = 0
         isGameWon = false
+        userInput = ""
     }
 }
 
