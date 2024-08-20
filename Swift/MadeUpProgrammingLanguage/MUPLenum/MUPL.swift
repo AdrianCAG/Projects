@@ -12,40 +12,35 @@ import Foundation
 
 
 
-protocol MUPL {}
-
-
-
-
-indirect enum MUPLExpr: MUPL, CustomStringConvertible{
+indirect enum MUPL: CustomStringConvertible{
     // a variable, e.g., (var "foo")
     case vaar(String)
     //  a constant number, e.g., (int 17)
     case int(Int)
     // add two expressions
-    case addE(MUPLExpr, MUPLExpr)
+    case addE(MUPL, MUPL)
     // if e1 > e2 then e3 else e4
-    case ifgreater(MUPLExpr, MUPLExpr, MUPLExpr, MUPLExpr)
+    case ifgreater(MUPL, MUPL, MUPL, MUPL)
     // a recursive(?) 1-argument function
-    case fun(String, String, MUPLExpr)
+    case fun(String, String, MUPL)
     // function call
-    case call(MUPLExpr, MUPLExpr)
+    case call(MUPL, MUPL)
     // a local binding (let var = e in body)
-    case mlet(String, MUPLExpr, MUPLExpr)
+    case mlet(String, MUPL, MUPL)
     // make a new pair
-    case apair(MUPLExpr, MUPLExpr)
+    case apair(MUPL, MUPL)
     // get first part of a pair
-    case fst(MUPLExpr)
+    case fst(MUPL)
     // get second part of a pair
-    case snd(MUPLExpr)
+    case snd(MUPL)
     // unit value -- good for ending a list
     case aunit(())
     // evaluate to 1 if e is unit else 0
-    case isaunit(MUPLExpr)
+    case isaunit(MUPL)
     // a closure is not in "source" programs but /is/ a MUPL value; it is what functions evaluate to
-    case closure([MUPLTuple<String, MUPLExpr>], MUPLExpr)
+    case closure([MUPLTuple<String, MUPL>], MUPL)
     // a recursive(?) 1-argument function
-    case funChallenge(String, String, MUPLExpr, Set<String>)
+    case funChallenge(String, String, MUPL, Set<String>)
     
     var description: String {
          switch self {
@@ -82,7 +77,7 @@ indirect enum MUPLExpr: MUPL, CustomStringConvertible{
 }
 
 
-struct MUPLTuple<A, B>: MUPL {
+struct MUPLTuple<A, B> {
     let first: A
     let second: B
 }
@@ -95,7 +90,7 @@ prefix func *<A, B>(pair: (A, B)) -> MUPLTuple<A, B> {
 
 
 
-func swiftArrayToMuplArray(_ arr: [MUPLExpr]) -> MUPLExpr {
+func swiftArrayToMuplArray(_ arr: [MUPL]) -> MUPL {
     if arr.isEmpty {
         return .aunit(())
     } else {
@@ -104,7 +99,7 @@ func swiftArrayToMuplArray(_ arr: [MUPLExpr]) -> MUPLExpr {
 }
 
 
-func muplArrayToSwiftArray(_ arr: MUPLExpr) -> [MUPLExpr] {
+func muplArrayToSwiftArray(_ arr: MUPL) -> [MUPL] {
     if case .aunit(_) = arr {
         return []
     } else if case .apair(let e1, let e2) = arr {
@@ -116,7 +111,7 @@ func muplArrayToSwiftArray(_ arr: MUPLExpr) -> [MUPLExpr] {
 
 
 // lookup a variable in an environment
-func envlookup(_ env: ArraySlice<MUPLTuple<String, MUPLExpr>>, _ str: String) -> MUPLExpr {
+func envlookup(_ env: ArraySlice<MUPLTuple<String, MUPL>>, _ str: String) -> MUPL {
     guard let firstPair = env.first else { fatalError("unbound variable during evaluation") }
     
     let (first, rest) = (firstPair.first, firstPair.second)
@@ -130,11 +125,11 @@ func envlookup(_ env: ArraySlice<MUPLTuple<String, MUPLExpr>>, _ str: String) ->
  
 
 // Overloaded version to allow initial call with full array
-func envlookup(_ env: [MUPLTuple<String, MUPLExpr>], _ str: String) -> MUPLExpr {
+func envlookup(_ env: [MUPLTuple<String, MUPL>], _ str: String) -> MUPL {
     return envlookup(env[...], str) // Pass the full array as a slice
 }
  
-func evalUnderEnv(_ e: MUPLExpr, _ env: [MUPLTuple<String, MUPLExpr>] = []) -> MUPLExpr {
+func evalUnderEnv(_ e: MUPL, _ env: [MUPLTuple<String, MUPL>] = []) -> MUPL {
     switch e {
     case let .vaar(string):
         return envlookup(env, string)
@@ -211,17 +206,17 @@ func evalUnderEnv(_ e: MUPLExpr, _ env: [MUPLTuple<String, MUPLExpr>] = []) -> M
 }
 
 
-func evalExp(_ e: MUPLExpr) -> MUPLExpr {
+func evalExp(_ e: MUPL) -> MUPL {
     return evalUnderEnv(e)
 }
 
 
-func ifaunit(_ e1: MUPLExpr, _ e2: MUPLExpr, _ e3: MUPLExpr) -> MUPLExpr {
+func ifaunit(_ e1: MUPL, _ e2: MUPL, _ e3: MUPL) -> MUPL {
     .ifgreater(.isaunit(e1), .int(0), e2, e3)
 }
 
 
-func mletStar(_ lstlst: [MUPLTuple<String, MUPLExpr>], _ e2: MUPLExpr) -> MUPLExpr {
+func mletStar(_ lstlst: [MUPLTuple<String, MUPL>], _ e2: MUPL) -> MUPL {
     if lstlst.isEmpty {
         return e2
     } else {
@@ -231,7 +226,7 @@ func mletStar(_ lstlst: [MUPLTuple<String, MUPLExpr>], _ e2: MUPLExpr) -> MUPLEx
 }
 
 
-func ifeq(_ e1: MUPLExpr, _ e2: MUPLExpr, _ e3: MUPLExpr, _ e4: MUPLExpr) -> MUPLExpr {
+func ifeq(_ e1: MUPL, _ e2: MUPL, _ e3: MUPL, _ e4: MUPL) -> MUPL {
     return mletStar([*("_x", e1), *("_y", e2)],
                     .ifgreater(.vaar("_x"), .vaar("_y"), e4,
                                .ifgreater(.vaar("_y"), .vaar("_x"), e4, e3)))
@@ -239,7 +234,7 @@ func ifeq(_ e1: MUPLExpr, _ e2: MUPLExpr, _ e3: MUPLExpr, _ e4: MUPLExpr) -> MUP
 
 
 
-let muplMap: MUPLExpr = {
+let muplMap: MUPL = {
     return .fun("fun", "x", .fun("funLst", "lst",
                                  ifeq(.isaunit(.vaar("lst")), .int(1), .aunit(()),
                                       .apair(.call(.vaar("x"), .fst(.vaar("lst"))),
@@ -247,7 +242,7 @@ let muplMap: MUPLExpr = {
 }()
 
 
-let muplMapAddN: MUPLExpr = {
+let muplMapAddN: MUPL = {
     return .mlet("map", muplMap,
                  .fun("muplFunInt", "i",
                       .fun("muplFunList", "mplInt",
@@ -256,13 +251,13 @@ let muplMapAddN: MUPLExpr = {
 }()
 
 
-func computeFreeVars(_ e: MUPLExpr) -> MUPLExpr {
+func computeFreeVars(_ e: MUPL) -> MUPL {
     // result
-    struct res: MUPL, CustomStringConvertible {
-        let e: MUPLExpr
+    struct res: CustomStringConvertible {
+        let e: MUPL
         let fvs: Set<String>
         
-        init(_ e: MUPLExpr, _ fvs: Set<String>) {
+        init(_ e: MUPL, _ fvs: Set<String>) {
             self.e = e
             self.fvs = fvs
         }
@@ -272,7 +267,7 @@ func computeFreeVars(_ e: MUPLExpr) -> MUPLExpr {
         }
     }
     
-    func f(_ e: MUPLExpr) -> res {
+    func f(_ e: MUPL) -> res {
         switch e {
         case let .vaar(string):
             return res(e, Set([string]))
@@ -335,7 +330,7 @@ func computeFreeVars(_ e: MUPLExpr) -> MUPLExpr {
 
 
 
-func evalUnderEvnC(_ e: MUPLExpr, _ env: [MUPLTuple<String, MUPLExpr>]) -> MUPLExpr {
+func evalUnderEvnC(_ e: MUPL, _ env: [MUPLTuple<String, MUPL>]) -> MUPL {
     switch e {
     case .int(_):
         return e
@@ -430,6 +425,6 @@ func evalUnderEvnC(_ e: MUPLExpr, _ env: [MUPLTuple<String, MUPLExpr>]) -> MUPLE
 }
 
 
-func evalExpC(_ e: MUPLExpr) -> MUPLExpr {
+func evalExpC(_ e: MUPL) -> MUPL {
     evalUnderEvnC(computeFreeVars(e), [])
 }

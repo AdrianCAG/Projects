@@ -9,7 +9,7 @@ import XCTest
 
 
 
-func muplEqual(_ lhs: MUPLExpr, _ rhs: MUPLExpr) -> Bool {
+func muplEqual(_ lhs: MUPL, _ rhs: MUPL) -> Bool {
     switch (lhs, rhs) {
     case let (.fun(name1, formal1, body1), .fun(name2, formal2, body2)):
         return name1 == name2 && formal1 == formal2 && muplEqual(body1, body2)
@@ -61,8 +61,8 @@ func muplEqual(_ lhs: MUPLExpr, _ rhs: MUPLExpr) -> Bool {
     }
 }
 
-extension Array where Element == MUPLTuple<String, MUPLExpr> {
-    static func ==(lhs: [MUPLTuple<String, MUPLExpr>], rhs: [MUPLTuple<String, MUPLExpr>]) -> Bool {
+extension Array where Element == MUPLTuple<String, MUPL> {
+    static func ==(lhs: [MUPLTuple<String, MUPL>], rhs: [MUPLTuple<String, MUPL>]) -> Bool {
         guard lhs.count == rhs.count else { return false }
         for (left, right) in zip(lhs, rhs) {
             if left.first != right.first || !muplEqual(left.second, right.second) {
@@ -74,20 +74,20 @@ extension Array where Element == MUPLTuple<String, MUPLExpr> {
 }
 
 
-func muplArrayEqual(_ lhs: [MUPLExpr], _ rhs: [MUPLExpr]) -> Bool {
+func muplArrayEqual(_ lhs: [MUPL], _ rhs: [MUPL]) -> Bool {
     guard lhs.count == rhs.count else { return false }
     return zip(lhs, rhs).allSatisfy(muplEqual)
 }
 
 
-func customTest(_ description: String, _ testCase: XCTestCase, _ function: () -> MUPLExpr, expected: MUPLExpr, file: StaticString = #file, line: UInt = #line) {
+func customTest(_ description: String, _ testCase: XCTestCase, _ function: () -> MUPL, expected: MUPL, file: StaticString = #file, line: UInt = #line) {
     let result = function()
     testCase.addTeardownBlock {
         XCTAssertTrue(muplEqual(result, expected), "\(description) failed. Expected \(expected), got \(result)", file: file, line: line)
     }
 }
 
-func customTestArray(_ description: String, _ testCase: XCTestCase, _ function: () -> [MUPLExpr], expected: [MUPLExpr], file: StaticString = #file, line: UInt = #line) {
+func customTestArray(_ description: String, _ testCase: XCTestCase, _ function: () -> [MUPL], expected: [MUPL], file: StaticString = #file, line: UInt = #line) {
     let result = function()
     testCase.addTeardownBlock {
         XCTAssertTrue(muplArrayEqual(result, expected), "\(description) failed. Expected \(expected), got \(result)", file: file, line: line)
