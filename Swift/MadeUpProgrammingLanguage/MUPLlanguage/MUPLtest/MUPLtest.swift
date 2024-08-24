@@ -40,12 +40,12 @@ func muplEqual(_ lhs: MUPL, _ rhs: MUPL) -> Bool {
                 
     case let (lhs as closure<funChallenge>, rhs as closure<funChallenge>):
         return lhs.env.count == rhs.env.count &&
-               lhs.env.elementsEqual(rhs.env, by: { muplEqual($0.second, $1.second) }) &&
+        lhs.env.elementsEqual(rhs.env, by: { muplEqual($0.1, $1.1) }) &&
                muplEqual(lhs.fun, rhs.fun)
     
     case let (lhs as closure<fun>, rhs as closure<fun>):
         return lhs.env.count == rhs.env.count &&
-        lhs.env.elementsEqual(rhs.env, by: { muplEqual($0.second, $1.second) }) &&
+        lhs.env.elementsEqual(rhs.env, by: { muplEqual($0.1, $1.1) }) &&
                muplEqual(lhs.fun, rhs.fun)
         
     case let (lhs as call, rhs as call):
@@ -76,11 +76,11 @@ func muplEqual(_ lhs: MUPL, _ rhs: MUPL) -> Bool {
     }
 }
 
-extension Array where Element == MUPLTuple<String, MUPL> {
-    static func ==(lhs: [MUPLTuple<String, MUPL>], rhs: [MUPLTuple<String, MUPL>]) -> Bool {
+extension Array where Element == (String, MUPL) {
+    static func ==(lhs: [(String, MUPL)], rhs: [(String, MUPL)]) -> Bool {
         guard lhs.count == rhs.count else { return false }
         for (left, right) in zip(lhs, rhs) {
-            if left.first != right.first || !muplEqual(left.second, right.second) {
+            if left.0 != right.0 || !muplEqual(left.1, right.1) {
                 return false
             }
         }

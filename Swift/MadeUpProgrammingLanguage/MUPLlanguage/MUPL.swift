@@ -11,14 +11,14 @@ import Foundation
 
 
 
-protocol MUPL {}
+protocol MUPL: CustomStringConvertible {}
 
 
 // definition of structures for MUPL programs - Do NOT change
 
 
 // a variable, e.g., (var "foo")
-struct vaar: MUPL, CustomStringConvertible {
+struct vaar: MUPL {
     let string: String
     
     init(_ string: String) {
@@ -31,7 +31,7 @@ struct vaar: MUPL, CustomStringConvertible {
 }
 
 //  a constant number, e.g., (int 17)
-struct int: MUPL, CustomStringConvertible {
+struct int: MUPL {
     let num: Int
     
     init(_ num: Int) {
@@ -44,7 +44,7 @@ struct int: MUPL, CustomStringConvertible {
 }
 
 // add two expressions
-struct addE: MUPL, CustomStringConvertible {
+struct addE: MUPL {
     let e1: MUPL
     let e2: MUPL
     
@@ -60,7 +60,7 @@ struct addE: MUPL, CustomStringConvertible {
 }
 
 // if e1 > e2 then e3 else e4
-struct ifgreater: MUPL, CustomStringConvertible {
+struct ifgreater: MUPL {
     let e1: MUPL
     let e2: MUPL
     let e3: MUPL
@@ -79,7 +79,7 @@ struct ifgreater: MUPL, CustomStringConvertible {
 }
 
 // a recursive(?) 1-argument function
-struct fun: MUPL, CustomStringConvertible {
+struct fun: MUPL {
     let nameopt: String
     let formal: String
     let body: MUPL
@@ -96,7 +96,7 @@ struct fun: MUPL, CustomStringConvertible {
 }
 
 // function call
-struct call: MUPL, CustomStringConvertible {
+struct call: MUPL {
     let funexp: MUPL
     let actual: MUPL
     
@@ -111,7 +111,7 @@ struct call: MUPL, CustomStringConvertible {
 }
 
 // a local binding (let var = e in body)
-struct mlet: MUPL, CustomStringConvertible {
+struct mlet: MUPL {
     let vaar: String
     let e: MUPL
     let body: MUPL
@@ -128,7 +128,7 @@ struct mlet: MUPL, CustomStringConvertible {
 }
 
 // make a new pair
-struct apair: MUPL, CustomStringConvertible {
+struct apair: MUPL {
     let e1: MUPL
     let e2: MUPL
     
@@ -143,7 +143,7 @@ struct apair: MUPL, CustomStringConvertible {
 }
 
 // get first part of a pair
-struct fst: MUPL, CustomStringConvertible {
+struct fst: MUPL {
     let e: MUPL
     
     init(_ e: MUPL) {
@@ -156,7 +156,7 @@ struct fst: MUPL, CustomStringConvertible {
 }
 
 // get second part of a pair
-struct snd: MUPL, CustomStringConvertible {
+struct snd: MUPL {
     let e: MUPL
     
     init(_ e: MUPL) {
@@ -169,10 +169,14 @@ struct snd: MUPL, CustomStringConvertible {
 }
 
 // unit value -- good for ending a list
-struct aunit: MUPL {}
+struct aunit: MUPL {
+    var description: String {
+        return "aunit()"
+    }
+}
 
 // evaluate to 1 if e is unit else 0
-struct isaunit: MUPL, CustomStringConvertible {
+struct isaunit: MUPL {
     let e: MUPL
     
     init(_ e: MUPL) {
@@ -185,15 +189,15 @@ struct isaunit: MUPL, CustomStringConvertible {
 }
 
 
-protocol funProtocol: MUPL, CustomStringConvertible {}
+protocol funProtocol: MUPL {}
 
 
 // a closure is not in "source" programs but /is/ a MUPL value; it is what functions evaluate to
-struct closure<T: funProtocol>: MUPL, CustomStringConvertible {
-    let env: [MUPLTuple<String, MUPL>]
+struct closure<T: funProtocol>: MUPL {
+    let env: [(String, MUPL)]
     let fun: T
     
-    init(_ env: [MUPLTuple<String, MUPL>], _ fun: T) {
+    init(_ env: [(String, MUPL)], _ fun: T) {
         self.env = env
         self.fun = fun
     }
@@ -204,15 +208,12 @@ struct closure<T: funProtocol>: MUPL, CustomStringConvertible {
 }
 
 
-struct MUPLTuple<A, B>: MUPL {
-    let first: A
-    let second: B
-}
 
 // MUPL custom tuple
 prefix operator *
-prefix func *<A, B>(pair: (A, B)) -> MUPLTuple<A, B> {
-    return MUPLTuple(first: pair.0, second: pair.1)
+prefix func *<A, B>(pair: (A, B)) -> (A, B){
+    return (pair.0, pair.1)
+//    return MUPLTuple(first: pair.0, second: pair.1)
 }
 
 
@@ -240,10 +241,10 @@ func muplArrayToSwiftArray(_ arr: MUPL) -> [MUPL] {
 
 
 // lookup a variable in an environment
-func envlookup(_ env: ArraySlice<MUPLTuple<String, MUPL>>, _ str: String) -> MUPL {
+func envlookup(_ env: ArraySlice<(String, MUPL)>, _ str: String) -> MUPL {
     guard let firstPair = env.first else { fatalError("unbound variable during evaluation") }
     
-    let (first, rest) = (firstPair.first, firstPair.second)
+    let (first, rest) = (firstPair.0, firstPair.1)
     
     if first == str {
         return rest
@@ -254,12 +255,12 @@ func envlookup(_ env: ArraySlice<MUPLTuple<String, MUPL>>, _ str: String) -> MUP
  
 
 // Overloaded version to allow initial call with full array
-func envlookup(_ env: [MUPLTuple<String, MUPL>], _ str: String) -> MUPL {
+func envlookup(_ env: [(String, MUPL)], _ str: String) -> MUPL {
     return envlookup(env[...], str) // Pass the full array as a slice
 }
  
 
-func evalUnderEnv(_ e: MUPL, _ env: [MUPLTuple<String, MUPL>] = []) -> MUPL {
+func evalUnderEnv(_ e: MUPL, _ env: [(String, MUPL)] = []) -> MUPL {
     switch e {
     case let exp as vaar:
         return envlookup(env, exp.string)
@@ -341,12 +342,12 @@ func ifaunit(_ e1: MUPL, _ e2: MUPL, _ e3: MUPL) -> MUPL {
 }
 
 
-func mletStar(_ lstlst: [MUPLTuple<String, MUPL>], _ e2: MUPL) -> MUPL {
+func mletStar(_ lstlst: [(String, MUPL)], _ e2: MUPL) -> MUPL {
     if lstlst.isEmpty {
         return e2
     } else {
-        let v: MUPLTuple = lstlst.first!
-        return mlet(v.first, v.second, mletStar(Array(lstlst.dropFirst()), e2))
+        let v = lstlst.first!
+        return mlet(v.0, v.1, mletStar(Array(lstlst.dropFirst()), e2))
     }
 }
 
@@ -380,7 +381,7 @@ let muplMapAddN = {
 
 
 // a recursive(?) 1-argument function
-struct funChallenge: MUPL, CustomStringConvertible {
+struct funChallenge: MUPL {
     let nameopt: String
     let formal: String
     let body: MUPL
@@ -480,7 +481,7 @@ extension fun: funProtocol {}
 extension funChallenge: funProtocol {}
 
 
-func evalUnderEvnC(_ e: MUPL, _ env: [MUPLTuple<String, MUPL>]) -> MUPL {
+func evalUnderEvnC(_ e: MUPL, _ env: [(String, MUPL)]) -> MUPL {
     switch e {
     case let exp as int:
         return exp
@@ -574,5 +575,4 @@ func evalUnderEvnC(_ e: MUPL, _ env: [MUPLTuple<String, MUPL>]) -> MUPL {
 func evalExpC(_ e: MUPL) -> MUPL {
     evalUnderEvnC(computeFreeVars(e), [])
 }
-
 
