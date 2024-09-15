@@ -1,0 +1,5 @@
+1 LED
+2 220ohm Resistor
+3 Jump Wires
+4 Arduino Board
+5 Breadboard
