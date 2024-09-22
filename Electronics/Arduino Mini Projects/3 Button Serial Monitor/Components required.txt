@@ -1,0 +1,5 @@
+1 Button
+2 10kohm Resistor
+3 Several Jump Wires
+4 Arduino/Mega2560 Board
+5 Breadboard
