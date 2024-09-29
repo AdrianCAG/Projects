@@ -1,0 +1,4 @@
+1 Potentiometer
+2 Jump Wires
+4 Arduino/Mega2560 Board
+5 Breadboard
