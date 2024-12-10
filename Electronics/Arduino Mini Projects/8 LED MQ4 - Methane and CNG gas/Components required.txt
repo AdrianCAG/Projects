@@ -1,0 +1,6 @@
+1 LED
+2 220 ohm Resistor
+4 MQ-4 Gas Sensor
+5 Jump Wires
+6 Arduino/Mega2560 Board
+7 Breadboard
