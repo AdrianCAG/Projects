@@ -1,0 +1,5 @@
+1 RGB LED
+2 3x 220ohm Resistor
+3 Jump Wires
+4 Arduino/Mega2560 Board
+5 Breadboard
