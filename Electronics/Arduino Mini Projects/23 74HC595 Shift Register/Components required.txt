@@ -1,0 +1,6 @@
+1 74HC595
+2 8x 220ohm Resistor
+3 8x LED
+4 Jump Wires
+5 Arduino/Mega2560 Board
+6 Breadboard

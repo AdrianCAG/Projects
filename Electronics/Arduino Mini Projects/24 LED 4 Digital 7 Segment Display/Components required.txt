@@ -1,0 +1,5 @@
+1 4-Digital 7-Segment Display 
+2 8x 220ohm Resistor
+3 Jump Wires
+4 Arduino/Mega2560 Board
+5 Breadboard
