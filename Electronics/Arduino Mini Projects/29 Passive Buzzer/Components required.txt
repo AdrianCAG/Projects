@@ -1,3 +1,3 @@
 1 Passive Buzzer
-2 Several Jump Wires (male-to-female)
+2 Several Jump Wires 
 3 Arduino/Mega2560 Board
