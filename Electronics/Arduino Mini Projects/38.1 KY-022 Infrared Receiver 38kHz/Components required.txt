@@ -1,0 +1,4 @@
+1 KY-022 Receiver Module 
+2 IR Remote Controller
+3 Several Jump Wires 
+4 Arduino/Mega2560 Board
