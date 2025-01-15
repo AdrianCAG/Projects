@@ -1,0 +1,4 @@
+1 MPR121
+2 Several Jump Wires 
+3 Breadboard
+4 Arduino/Mega2560 Board
