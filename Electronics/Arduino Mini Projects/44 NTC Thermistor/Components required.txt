@@ -1,0 +1,5 @@
+1 Thermistor
+2 10k ohm resistor
+3 Several Jump Wires 
+4 Breadboard
+5 Arduino/Mega2560 Board
