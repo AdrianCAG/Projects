@@ -1,0 +1,5 @@
+1 Card
+2 Key
+3 RFID-RC522
+4 Several Jump Wires 
+5 Arduino/Mega2560 Board
