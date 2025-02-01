@@ -1,0 +1,3 @@
+1 MQ-2 Gas Sensor
+3 Several Jump Wires 
+4 Arduino/Mega2560 Board
