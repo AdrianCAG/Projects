@@ -1,0 +1,6 @@
+1 KY-009 RGB LED
+2 2x 110ohm Resistor
+3 180ohm Resistor
+4 Breadboard
+5 Several Jump Wires 
+6 Arduino Board

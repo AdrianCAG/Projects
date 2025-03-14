@@ -1,0 +1,7 @@
+1 Green Laser from old device 
+2 Bench Power Supply
+
+Green Laser Module Description (Maybe)
+- Requirements Voltage: (1.6-1.7) ~ 2.2V
+- Threshold current: (100 - 150mA)
+- Maximum current: around 360mA
