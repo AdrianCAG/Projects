@@ -1,0 +1,5 @@
+1 KY-011 2 Color LED
+2 2x 330ohm Resistor
+3 Jump Wires
+4 Breadboard
+5 Arduino Board
