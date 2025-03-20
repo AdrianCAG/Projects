@@ -1,0 +1,4 @@
+1 KY-025 Magnetic Reed Switch 
+2 Jump Wires
+3 Breadboard
+4 Arduino Board
