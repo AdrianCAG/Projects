@@ -1,4 +1,4 @@
-1 KY-28 Temperature Sensor
+1 KY-028 Temperature Sensor
 2 Jump Wires
 3 Breadboard
 4 Arduino Board
