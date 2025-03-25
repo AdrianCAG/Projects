@@ -1,0 +1,4 @@
+1 KY-034 7 Color LED 5mm Flash
+2 Jump Wires
+3 Breadboard
+4 Arduino Board
