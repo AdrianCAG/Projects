@@ -1,0 +1,11 @@
+1 1 Green LED
+2 1 Red LED
+3 2x 220 ohm resistors
+4 1x 10k ohm resistor
+5 Button
+6 I2C LCD1602 Module 
+7 RFID-RC522 Module (Key/Card)
+8 Ultrasonic Module 
+9 Jump Wires
+10 Breadboard
+11 Arduino Board
