@@ -1,0 +1,8 @@
+1 74HC595 8bit Shift Register
+2 2x led
+3 7 Segment Digit LED Display
+4 1 Touch Sensor
+5 10x 220ohm Resistor
+6 Several Jumper Wires
+7 Breadboard
+8 Arduino Board
