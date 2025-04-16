@@ -1,0 +1,31 @@
+Continuously reads temperature from the DHT11 sensor, and compares it to the threshold value.
+Turns the relay ON and lights the LED if temperature exceeds threshold + hysteresis.
+Turns them OFF when temperature falls below threshold - hysteresis.
+LCD displays both current and target (threshold) temperature.
+
+Slider is used for Set Mode and Monitor Mode. 
+LOW (slide OFF) = Set Mode     - Slide to the left 
+HIGH (slide ON) = Monitor Mode - Slide to the right
+
+In Set mode: use 3 digit-select buttons (Hundreds: pin 8, Tens: pin 9, Ones: pin 10) to choose which 
+digit to modify. Rotate the encoder to increase or decrease the selected digit. Then slide
+to the right to save the new threshold temperature to EEPROM. Also display shows the new threshold while 
+editing.
+
+
+
+Notes
+-----
+- Threshold is stored in EEPROM, so it’s saved even if power is lost.
+- Hysteresis (±0.25 °C) prevents frequent relay switching.
+- You can adjust the hysteresis value in code if needed.
+
+
+* Add anything you want to relay module.
+
+
+--------------------------------------------------------------------------------------------------------
+Hysteresis refers to a phenomenon where the output of a system depends not only on the current input but 
+also on the past history of inputs. In simpler terms, it's a lagging response where the output does not 
+immediately match the change in input, and the system's state depends on how it reached the current input. 
+This lag can be observed in various systems, from physics and engineering to economics and even biology.

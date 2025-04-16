@@ -1,0 +1,13 @@
+1 3x Buttons
+2 Red LED
+3 Slide Switch
+4 104 Capacitor
+5 Rotary Encoder
+6 Relay Module
+7 DHT11
+8 LCD1602
+9 1x 220ohm Resistor
+10 4x 10k ohm Resistor
+11 Several Jumper Wire
+12 Breadboard
+13 Arduino Board
