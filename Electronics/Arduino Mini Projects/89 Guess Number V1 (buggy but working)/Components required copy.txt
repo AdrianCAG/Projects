@@ -1,0 +1,8 @@
+1 IR Remote Controller
+2 Remote
+3 LCD1602
+4 Servo
+5 Cardboard
+6 Several Jump Wires
+7 Breadboard
+8 Arduino Board

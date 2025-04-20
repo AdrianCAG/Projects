@@ -1,0 +1,15 @@
+* Copy Servo_Alignment code indo Arduino IDE and attach servo pin to pin 9.
+
+
+Servo_Alignment is designed to help visually align the servo with the number scale used in the game.
+The servo starts at 100 and gradually moves:
+- To 50 in 8 seconds
+- Then to 0 in another 8 seconds
+- After reaching 0, it resets and the cycle repeats.
+
+To improve accuracy, attach a plastic pin or pointer to the top of the servo horn.
+Try to align it as precisely as possible with the number markers to visually represent the current value.
+
+----------------
+
+Create your own scoring system. See Fritzing Circuit for more details.
