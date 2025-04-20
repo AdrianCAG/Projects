@@ -12,4 +12,4 @@ Try to align it as precisely as possible with the number markers to visually rep
 
 ----------------
 
-Create your own scoring system. See Fritzing Circuit for more details.
+Create your own scoring system/rules. See Fritzing Circuit for more details.
