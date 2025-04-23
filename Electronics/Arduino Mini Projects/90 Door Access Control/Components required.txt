@@ -1,0 +1,10 @@
+1 RFID
+2 Keypad
+3 Power Supply Module
+4 LCD1602
+5 ULN2003
+6 Stepper Motor
+7 Buzzer
+8 Several Jumper Wires
+9 Breadboard
+10 Arduino Board
