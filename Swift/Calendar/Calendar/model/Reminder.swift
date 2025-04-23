@@ -18,7 +18,7 @@ class Reminder: Entry {
     }
     
     // Getters
-    func getNot() -> String {
+    func getNote() -> String {
         if note.isEmpty {
             return "No note added"
         } else {

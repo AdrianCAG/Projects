@@ -22,9 +22,9 @@ myCal.addEntry(coffee)
 myCal.addEntry(Event(nextWeek, Time(15, 30), "Wash car"))
 
 let m = Meeting(nextMonth, Time(9, 0), "Programming")
-m.addAttendees("max@uni.com")
-m.addAttendees("geo@uni.com")
-m.addAttendees("rex@uni.com")
+m.addAttendee("max@uni.com")
+m.addAttendee("geo@uni.com")
+m.addAttendee("rex@uni.com")
 myCal.addEntry(m)
 
 m.sendInvites()

@@ -23,7 +23,7 @@ class Event: Entry {
         return reminder
     }
 
-    func setReminder(r: Reminder) {
+    func setReminder(_ r: Reminder) {
         self.reminder = r
     }
 }

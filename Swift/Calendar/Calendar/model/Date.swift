@@ -9,7 +9,7 @@ import Foundation
 
 
 
-class Date {
+class Date: Equatable {
     private let month: Int
     private let date: Int
     private let year: Int
@@ -24,7 +24,7 @@ class Date {
     func getMounth() -> Int { return month }
     func getDate() -> Int { return date }
     func getYear() -> Int { return year }
-    func getDateShort() -> String { return "\(date) / \(month) / \(year)"}
+    func getDateShort() -> String { return "\(date)/\(month)/\(year)"}
     
     func getDatePretty() -> String {
         var monthName = ""
@@ -71,9 +71,15 @@ class Date {
         switch determinant {
             case 1: return "st"
             case 2: return "nd"
-            case 3: return "ed"
+            case 3: return "rd"
             default: 
                 return "th"
         }
+    }
+    
+    static func == (lhs: Date, rhs: Date) -> Bool {
+        return lhs.month == rhs.month &&
+               lhs.date == rhs.date &&
+               lhs.year == rhs.year
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 
 
 
-class Time {
+class Time: Equatable {
     private let hours: Int
     private let minutes: Int
     
@@ -21,15 +21,15 @@ class Time {
     // Getters
     func getHours() -> String { return addPrefix(hours) }
     func getMinutes() -> String { return addPrefix(minutes) }
-    func timeInt24Hours() -> String { return "\(addPrefix(hours)) : \(getMinutes())" }
+    func timeIn24Hours() -> String { return "\(addPrefix(hours)):\(getMinutes())" }
     
-    func timeInt12Hours() -> String {
+    func timeIn12Hours() -> String {
         if hours > 12 {
-            return "\(hours - 12) : \(getMinutes())"
+            return "\(hours - 12):\(getMinutes())"
         } else if hours == 0 {
-            return "\(12) : \(getMinutes())"
+            return "\(12):\(getMinutes())"
         } else {
-            return "\(hours) : \(getMinutes())"
+            return "\(hours):\(getMinutes())"
         }
     }
     
@@ -40,5 +40,10 @@ class Time {
         } else {
             return "" + String(i)
         }
+    }
+    
+    static func == (lhs: Time, rhs: Time) -> Bool {
+        return lhs.hours == rhs.hours &&
+               lhs.minutes == rhs.minutes
     }
 }

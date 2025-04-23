@@ -16,13 +16,13 @@ class Meeting: Event {
     }
     
     // Getters
-    func getAttendees() -> [String] { return attendees }
+    func getAttendee() -> [String] { return attendees }
     
     
     // Setters
-    func addAttendees(_ attendee: String) { attendees.append(attendee) }
+    func addAttendee(_ attendee: String) { attendees.append(attendee) }
     
-    func removeAttendees(_ attendee: String) {
+    func removeAttendee(_ attendee: String) {
         if let index = attendees.firstIndex(where: { $0 == attendee }) {
             attendees.remove(at: index)
         }
