@@ -27,3 +27,25 @@ class Event: Entry {
         self.reminder = r
     }
 }
+
+
+// Modify later
+/*
+ class Event: Entry {
+     private lazy var reminder: Reminder = Reminder(date, theTime, "abc")
+  
+     // REQUIRES: date, time, label != nil, date is in the future
+     override init(_ date: Date, _ theTime: Time, _ label: String) {
+         super.init(date, theTime, label)
+     }
+
+     // Getter for reminder
+     func getReminder() -> Reminder {
+         return reminder
+     }
+
+     func setReminder(_ r: Reminder) {
+         self.reminder = r
+     }
+ }
+ */
