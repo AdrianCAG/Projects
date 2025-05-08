@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Projects}/Swift/LearningOOP/AdvancedToProfessional/CloudSyncPlatform",
+            "name": "Debug CloudSyncPlatform (Swift/LearningOOP/AdvancedToProfessional/CloudSyncPlatform)",
+            "program": "${workspaceFolder:Projects}/Swift/LearningOOP/AdvancedToProfessional/CloudSyncPlatform/.build/debug/CloudSyncPlatform",
+            "preLaunchTask": "swift: Build Debug CloudSyncPlatform (Swift/LearningOOP/AdvancedToProfessional/CloudSyncPlatform)"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Projects}/Swift/LearningOOP/AdvancedToProfessional/CloudSyncPlatform",
+            "name": "Release CloudSyncPlatform (Swift/LearningOOP/AdvancedToProfessional/CloudSyncPlatform)",
+            "program": "${workspaceFolder:Projects}/Swift/LearningOOP/AdvancedToProfessional/CloudSyncPlatform/.build/release/CloudSyncPlatform",
+            "preLaunchTask": "swift: Build Release CloudSyncPlatform (Swift/LearningOOP/AdvancedToProfessional/CloudSyncPlatform)"
+        }
+    ]
+}
