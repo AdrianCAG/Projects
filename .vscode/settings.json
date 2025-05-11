@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "qdebug": "cpp",
+        "qdir": "cpp",
+        "qcoreapplication": "cpp",
+        "qtimer": "cpp"
+    }
+}

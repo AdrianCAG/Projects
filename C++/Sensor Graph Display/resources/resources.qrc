@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/shape.png</file>
+        <file>icons/move.png</file>
+        <file>icons/resize.png</file>
+        <file>icons/delete.png</file>
+        <file>icons/play_shape.png</file>
+        <file>icons/play_all.png</file>
+    </qresource>
+</RCC>
