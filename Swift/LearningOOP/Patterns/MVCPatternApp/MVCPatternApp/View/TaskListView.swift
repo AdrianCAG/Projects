@@ -11,6 +11,38 @@ struct TaskListView: View {
     @EnvironmentObject var taskController: TaskController
     @State private var searchText = ""
     
+    // Function to delete today's tasks
+    private func deleteTodayItems(at offsets: IndexSet) {
+        let todayTasks = taskController.tasksDueToday()
+        for index in offsets {
+            let task = todayTasks[index]
+            taskController.deleteTask(withId: task.id)
+        }
+    }
+    
+    // Function to delete this week's tasks
+    private func deleteWeekItems(at offsets: IndexSet) {
+        let weekTasks = taskController.tasksDueThisWeek().filter { weekTask in
+            !taskController.tasksDueToday().contains { todayTask in todayTask.id == weekTask.id }
+        }
+        for index in offsets {
+            let task = weekTasks[index]
+            taskController.deleteTask(withId: task.id)
+        }
+    }
+    
+    // Function to delete other tasks
+    private func deleteOtherItems(at offsets: IndexSet) {
+        let otherTasks = taskController.filteredTasks.filter { task in
+            !taskController.tasksDueToday().contains { todayTask in todayTask.id == task.id } &&
+            !taskController.tasksDueThisWeek().contains { weekTask in weekTask.id == task.id }
+        }
+        for index in offsets {
+            let task = otherTasks[index]
+            taskController.deleteTask(withId: task.id)
+        }
+    }
+    
     var body: some View {
         VStack {
             // Search bar
@@ -29,6 +61,7 @@ struct TaskListView: View {
                             ForEach(taskController.tasksDueToday()) { task in
                                 TaskRowView(task: task)
                             }
+                            .onDelete(perform: deleteTodayItems)
                         }
                     }
                     
@@ -40,6 +73,7 @@ struct TaskListView: View {
                             }) { task in
                                 TaskRowView(task: task)
                             }
+                            .onDelete(perform: deleteWeekItems)
                         }
                     }
                     
@@ -51,6 +85,7 @@ struct TaskListView: View {
                         }) { task in
                             TaskRowView(task: task)
                         }
+                        .onDelete(perform: deleteOtherItems)
                     }
                 }
                 .listStyle(InsetGroupedListStyle())
