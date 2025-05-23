@@ -36,6 +36,9 @@ Applications specifically focused on demonstrating design patterns:
 - **FileSystemCompositePatternApp**: Demonstrates the Composite pattern for tree-like object structures
 - **SecureAPIProxyPatternApp**: Demonstrates the Proxy pattern for controlled access to resources
 - **MVCPatternApp**: Demonstrates the Model-View-Controller architectural pattern
+- **MVVMPatternApp**: Demonstrates the Model-View-ViewModel architectural pattern through a book collection management system
+- **StockMarketObserverPatternApp**: A stock market monitoring system demonstrating the Observer pattern with a custom implementation
+- **StockMarketObserverBuiltInPatternApp**: The same stock market monitoring system but demonstrating the Observer pattern using Swift's built-in NotificationCenter
 
 ### 5. Build Tools
 Tools for managing the Swift projects:
