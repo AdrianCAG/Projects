@@ -1,0 +1,9 @@
+1 MQ2
+2 MQ3
+3 MQ135
+4 DHT22
+5 BMP180
+6 Jump Wires
+7 Breadboard
+8 Arduino Board
+9 *Optional* DC Power Supply

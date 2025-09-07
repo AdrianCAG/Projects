@@ -1,0 +1,13 @@
+1 MQ4
+2 MQ5
+3 MQ6
+4 MQ7
+5 MQ8
+6 MQ9
+7 MQ139
+8 DHT11
+9 KY028
+10 Jump Wires
+11 Breadboard
+12 Arduino Board
+13 *Optional* DC Power Supply
