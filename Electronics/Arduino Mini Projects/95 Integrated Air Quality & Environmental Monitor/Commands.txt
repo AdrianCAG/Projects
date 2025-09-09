@@ -1,0 +1,7 @@
+ls -l /dev/cu.usb* 2>/dev/null | cat
+sudo lsof -nP | grep -E "usbmodem|usbserial|tty.usb|cu.usb" | cat
+
+// kill one
+kill 69057 || pkill -f serial-monitor
+// kill all
+sudo lsof -nP | grep -E "usbmodem|usbserial|tty.usb|cu.usb" | awk '{print $2}' | xargs sudo kill

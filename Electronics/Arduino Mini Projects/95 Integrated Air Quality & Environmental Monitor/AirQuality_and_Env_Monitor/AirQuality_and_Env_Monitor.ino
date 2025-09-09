@@ -127,7 +127,7 @@ void loop() {
 }
 
 void writeCSVHeaders() {
-  Serial.println("MQ2_Raw,MQ3_Raw,MQ135_Raw,MQ4_Raw,MQ5_Raw,MQ6_Raw,MQ7_Raw,MQ8_Raw,MQ9_Raw,MQ139_Raw,DHT11_1_Temp_C,DHT11_1_Humidity_%,DHT11_1_HeatIndex_C,DHT11_2_Temp_C,DHT11_2_Humidity_%,DHT11_2_HeatIndex_C,BMP180_Temp_C,BMP180_SeaLevel_Pressure_hPa,KY028_Temp_C");
+  Serial.println("timestamp,mq2_raw,mq3_raw,mq135_raw,mq4_raw,mq5_raw,mq6_raw,mq7_raw,mq8_raw,mq9_raw,mq139_raw,dht11_1_temp_c,dht11_1_humidity_pct,dht11_1_heatindex_c,dht11_2_temp_c,dht11_2_humidity_pct,dht11_2_heatindex_c,bmp180_temp_c,bmp180_sealevel_pressure_hpa,ky028_temp_c,");
 }
 
 void takeReadingsAndOutputCSV() {
