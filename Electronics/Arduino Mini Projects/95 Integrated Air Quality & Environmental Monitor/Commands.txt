@@ -1,7 +1,204 @@
+# USB Serial Commands Reference
+# usb_serial_commands.txt
+# Copy and paste these commands directly into your terminal as needed
+
+## DEVICE DISCOVERY COMMANDS
+
+# Find ALL USB serial devices (when you don't know the exact name)
+ls -l /dev/cu.* | grep -E "(usb|modem)" | cat
+
+# List all available USB serial devices (call-out devices for communication)  
+ls -l /dev/cu.usb* 2>/dev/null | cat
+
+# List both cu.usb* and tty.usb* devices (cu.* recommended for serial communication)
+ls -l /dev/{cu,tty}.usb* 2>/dev/null | cat
+
+# Show all modem-type devices including Arduino connections
+ls -l /dev/cu.usbmodem* /dev/tty.usbmodem* 2>/dev/null | cat
+
+# Find the most recently connected USB device
+ls -lt /dev/cu.* | grep -E "(usb|modem)" | head -1
+
+# Show devices with timestamps to identify newest connection
+ls -lt /dev/cu.* | grep -E "(usb|modem)" | head -5
+
+## PROCESS MONITORING COMMANDS
+
+# Check what processes are using USB serial devices (helps find conflicts)
+sudo lsof -nP | grep -E "usbmodem|usbserial|tty.usb|cu.usb" | cat
+
+# Show only PID and process name for USB serial devices
+sudo lsof -nP | grep -E "usbmodem|usbserial|tty.usb|cu.usb" | awk '{print $2, $1}' | cat
+
+# Check if specific device is in use
+sudo lsof -nP /dev/cu.usbmodem142301
+
+
+
+
+## PROCESS TERMINATION COMMANDS
+
+# Kill specific process by PID (replace 69057 with actual PID from lsof)
+kill 69057
+
+# Kill Arduino Serial Monitor specifically
+pkill -f serial-monitor
+
+# Kill all Arduino IDE processes
+pkill -f Arduino
+
+# Kill processes with "serial" in the command name
+pkill -f serial
+
+# DANGER: Kill ALL processes using USB serial devices (use with extreme caution!)
+sudo lsof -nP | grep -E "usbmodem|usbserial|tty.usb|cu.usb" | awk '{print $2}' | xargs sudo kill
+
+
+
+
+## SERIAL LOGGING COMMANDS
+
+# Start serial logger with default settings (9600 baud, sensor_log.csv)
+./serial_timestamp_logger.sh /dev/tty.usbmodem142301
+
+# Start with custom baud rate
+./serial_timestamp_logger.sh /dev/tty.usbmodem142301 115200
+
+# Start with custom output file
+./serial_timestamp_logger.sh /dev/tty.usbmodem142301 9600 my_data.csv
+
+# Start with output to specific directory (creates dated files)
+./serial_timestamp_logger.sh /dev/tty.usbmodem142301 9600 ./logs/
+
+
+
+
+## DEVICE TESTING COMMANDS
+
+# Test if device is responsive (read for 5 seconds then stop)
+timeout 5 cat /dev/cu.usbmodem142301
+
+# Check current device settings
+stty -f /dev/cu.usbmodem142301
+
+# Manually configure device settings
+stty -f /dev/cu.usbmodem142301 9600 raw -echo cs8 -cstopb -parenb
+
+# Quick read from device (Ctrl+C to stop)
+cat /dev/cu.usbmodem142301
+
+
+
+
+## TROUBLESHOOTING COMMANDS
+
+# Check system log for recent USB events
+log show --predicate 'eventMessage contains "usb"' --info --last 1h
+
+# List all serial-type devices
+ls -l /dev/{tty,cu}.* | grep -E "(usb|serial|modem)"
+
+# Check device file permissions
+ls -l /dev/cu.usbmodem* /dev/tty.usbmodem* 2>/dev/null
+
+# Show system information about USB devices
+system_profiler SPUSBDataType | grep -A 10 -B 5 -i arduino
+
+# Check for kernel messages about USB devices
+dmesg | grep -i usb | tail -10
+
+
+
+
+## AUTOMATIC DEVICE DISCOVERY AND USAGE
+
+# Find and store the most recent USB serial device
+DEVICE=$(ls -t /dev/cu.* | grep -E "(usb|modem)" | head -1)
+
+# Check if device was found and display it
+if [ -n "$DEVICE" ]; then echo "Found device: $DEVICE"; else echo "No USB device found"; fi
+
+# Use the discovered device automatically
+echo $DEVICE
+
+# One-liner to find device and start logging immediately
+./serial_timestamp_logger.sh $(ls -t /dev/cu.* | grep -E "(usb|modem)" | head -1)
+
+# Store device in variable and use it (multi-command approach)
+DEVICE=$(ls -t /dev/cu.* | grep -E "(usb|modem)" | head -1); echo "Using: $DEVICE"; ./serial_timestamp_logger.sh "$DEVICE"
+
+
+
+
+## COMMON WORKFLOW EXAMPLE
+
+# Step 1: Discover all available devices
+ls -l /dev/cu.* | grep -E "(usb|modem)" | cat
+
+# Step 2: Find the most recent (usually what you want)
+DEVICE=$(ls -t /dev/cu.* | grep -E "(usb|modem)" | head -1); echo "Most recent device: $DEVICE"
+
+# Step 3: Check for processes using any USB devices
+sudo lsof -nP | grep -E "usbmodem|usbserial|tty.usb|cu.usb" | cat
+
+# Step 4: Kill Arduino Serial Monitor if it's blocking the device
+pkill -f "serial-monitor"
+
+# Step 5: Start logging with auto-discovered device
+./serial_timestamp_logger.sh $(ls -t /dev/cu.* | grep -E "(usb|modem)" | head -1)
+
+# Step 6: Stop logging
+# Press Ctrl+C in the terminal running the logger
+
+
+
+
+## ADVANCED AUTO-DISCOVERY COMMANDS
+
+# Find device and test if it's responsive before using
+DEVICE=$(ls -t /dev/cu.* | grep -E "(usb|modem)" | head -1); if timeout 2 cat "$DEVICE" >/dev/null 2>&1; then echo "Device $DEVICE is responsive"; else echo "Device $DEVICE not responding"; fi
+
+# Loop through all USB devices and test each one
+for dev in $(ls /dev/cu.* | grep -E "(usb|modem)"); do echo "Testing $dev..."; timeout 1 cat "$dev" >/dev/null 2>&1 && echo "$dev is responsive" || echo "$dev not responding"; done
+
+# Find device, check if it's in use, then use it
+DEVICE=$(ls -t /dev/cu.* | grep -E "(usb|modem)" | head -1); sudo lsof -nP "$DEVICE" >/dev/null 2>&1 && echo "$DEVICE is busy" || echo "$DEVICE is available"
+
+
+
+
+## COMMON DEVICE NAMES YOU MIGHT SEE
+
+# Arduino Uno/Nano with CH340 chip:
+# /dev/cu.usbmodem142301 or /dev/tty.usbmodem142301
+
+# Arduino with different USB chip:
+# /dev/cu.usbmodem14201 or /dev/tty.usbmodem14201
+
+# FTDI USB-to-serial adapters:
+# /dev/cu.usbserial-A1B2C3D4 or /dev/tty.usbserial-A1B2C3D4
+
+# CP210x USB-to-serial chips:
+# /dev/cu.SLAB_USBtoUART or /dev/tty.SLAB_USBtoUART
+
+
+
+
+## NOTES
+
+# - Use /dev/cu.* devices for outgoing connections (recommended)
+# - Use /dev/tty.* devices for incoming connections (can cause issues)
+# - The serial logger script automatically converts tty.* to cu.* for compatibility
+# - Always close Arduino Serial Monitor before using other serial tools
+# - Kill commands can be destructive - use specific process targeting when possible
+
+
 ls -l /dev/cu.usb* 2>/dev/null | cat
 sudo lsof -nP | grep -E "usbmodem|usbserial|tty.usb|cu.usb" | cat
 
-// kill one
+
 kill 69057 || pkill -f serial-monitor
-// kill all
+
 sudo lsof -nP | grep -E "usbmodem|usbserial|tty.usb|cu.usb" | awk '{print $2}' | xargs sudo kill
+
+./serial_timestamp_logger.sh /dev/tty.usbmodem142301

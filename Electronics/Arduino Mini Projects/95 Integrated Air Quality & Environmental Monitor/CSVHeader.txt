@@ -1,0 +1,1 @@
+timestamp,mq2_raw,mq3_raw,mq135_raw,mq4_raw,mq5_raw,mq6_raw,mq7_raw,mq8_raw,mq9_raw,mq139_raw,dht11_1_temp_c,dht11_1_humidity_pct,dht11_1_heatindex_c,dht11_2_temp_c,dht11_2_humidity_pct,dht11_2_heatindex_c,bmp180_temp_c,bmp180_sealevel_pressure_hpa,ky028_temp_c

@@ -56,6 +56,9 @@ fi
 
 current_date="$(date +%F)"
 
+# CSV header to prepend on new rotated files
+CSV_HEADER="timestamp,mq2_raw,mq3_raw,mq135_raw,mq4_raw,mq5_raw,mq6_raw,mq7_raw,mq8_raw,mq9_raw,mq139_raw,dht11_1_temp_c,dht11_1_humidity_pct,dht11_1_heatindex_c,dht11_2_temp_c,dht11_2_humidity_pct,dht11_2_heatindex_c,bmp180_temp_c,bmp180_sealevel_pressure_hpa,ky028_temp_c"
+
 # Resolve output file path for a given date, keeping user's base name/extension
 resolve_outfile_for_date() {
     local date_part="$1"
@@ -125,6 +128,10 @@ sh -c "$READER" | while IFS= read -r line; do
         current_date="$now_date"
         OUTFILE_CURRENT="$(resolve_outfile_for_date "$current_date" "$OUTSPEC")"
         echo "--- Rotating log: $OUTFILE_CURRENT ---" >&2
+        # Ensure header is written at the top of every new/empty rotated file
+        if [ ! -s "$OUTFILE_CURRENT" ]; then
+            printf "%s\n" "$CSV_HEADER" >> "$OUTFILE_CURRENT"
+        fi
     fi
     if [ "$first_line" -eq 1 ]; then
         # Write the first line without a timestamp
