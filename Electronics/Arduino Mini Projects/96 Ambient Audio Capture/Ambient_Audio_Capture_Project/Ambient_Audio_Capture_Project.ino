@@ -1,9 +1,9 @@
 // Arduino Sound Trigger with Manual Stop Button - EVENT DRIVEN VERSION
 // Only sends data to Swift app when state changes occur
 
-const int analogSoundPin = A0;
-const int digitalSoundPin = 2;
-const int stopButtonPin = 3;
+const int analogSoundPin = A0;    // KY-037 analog output  
+const int digitalSoundPin = 2;    // KY-038 digital output
+const int stopButtonPin = 3;      // Button (pull-up)
 const int statusLED = 13;         // Recording status indicator (RED)
 const int triggerLED = 12;        // Trigger detection indicator (GREEN)
 const int buttonLED = 11;         // Button press indicator (BLUE)

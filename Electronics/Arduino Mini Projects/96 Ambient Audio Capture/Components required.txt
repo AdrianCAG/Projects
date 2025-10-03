@@ -1,0 +1,10 @@
+1 KY-037
+2 KY-038
+3 Button
+4 3 220ohm or 10kohm Resistor (LED)
+5 10kohm Resistor (Button)
+6 Jump Wires
+7 Breadboard
+8 Arduino Board
+9 Xcode
+10 Swift/SwiftUI
