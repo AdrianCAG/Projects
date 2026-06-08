@@ -1,0 +1,4 @@
+"Reference","Part","Qty","Value","Footprint"
+"J1","KF128 3.81mm 2P","1","Screw_Terminal_01x02","TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1-2-3.81_1x02_P3.81mm_Horizontal"
+"J2","2.54mm pin header","1","Conn_01x01_Pin","Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical"
+"RV1","3296W-103 potentiometer 10k","1","Potentiometer 10k","Potentiometer_THT:Potentiometer_Bourns_3296W_Vertical"
