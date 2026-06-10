@@ -1,0 +1,37 @@
+** Drc report for 6 Integrated Air Quality & Environmental Monitor.kicad_pcb **
+** Created on 2026-06-10T15:17:31 **
+** Report includes: Errors, Warnings, Exclusions **
+
+** Found 6 DRC violations **
+[lib_footprint_mismatch]: Footprint 'PinSocket_1x08_P2.54mm_Vertical' does not match copy in library 'Connector_PinSocket_2.54mm'
+    Local override; warning
+    @(127.9400 mm, 97.4600 mm): Footprint J1
+[lib_footprint_mismatch]: Footprint 'PinSocket_1x08_P2.54mm_Vertical' does not match copy in library 'Connector_PinSocket_2.54mm'
+    Local override; warning
+    @(150.8000 mm, 97.4600 mm): Footprint J3
+[lib_footprint_mismatch]: Footprint 'PinSocket_1x08_P2.54mm_Vertical' does not match copy in library 'Connector_PinSocket_2.54mm'
+    Local override; warning
+    @(173.6600 mm, 97.4600 mm): Footprint J5
+[lib_footprint_mismatch]: Footprint 'PinSocket_1x10_P2.54mm_Vertical' does not match copy in library 'Connector_PinSocket_2.54mm'
+    Local override; warning
+    @(118.7960 mm, 49.2000 mm): Footprint J2
+[lib_footprint_mismatch]: Footprint 'PinSocket_1x08_P2.54mm_Vertical' does not match copy in library 'Connector_PinSocket_2.54mm'
+    Local override; warning
+    @(145.7200 mm, 49.2000 mm): Footprint J4
+[lib_footprint_mismatch]: Footprint 'PinSocket_1x08_P2.54mm_Vertical' does not match copy in library 'Connector_PinSocket_2.54mm'
+    Local override; warning
+    @(168.5800 mm, 49.2000 mm): Footprint J6
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** Ignored checks **
+    - Footprint has no courtyard defined
+    - Track endpoint not centered on via
+    - Tuning profile track geometries
+    - Footprint doesn't match symbol's footprint filters
+    - PTH inside courtyard
+    - NPTH inside courtyard
+
+** End of Report **

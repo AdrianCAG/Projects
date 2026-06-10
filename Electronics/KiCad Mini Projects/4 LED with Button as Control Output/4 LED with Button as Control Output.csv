@@ -1,0 +1,7 @@
+"Reference","Parts","Qty","Value","Footprint"
+"D1","5mm LED","1","LED","LED_THT:LED_D5.0mm"
+"J1,J2","2.54mm pin header","2","Conn_01x01_Pin","Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical"
+"J3","KF128 3.81mm 2P","1","Screw_Terminal_01x02","TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1-2-3.81_1x02_P3.81mm_Horizontal"
+"R1","1206 SMD resistor 220 ohm","1","220","Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
+"R2","1206 SMD resistor 10k ohm","1","10k","Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
+"SW1","6x6x5mm tactile switch","1","SW_Omron_B3FS","Button_Switch_THT:SW_PUSH_6mm"
